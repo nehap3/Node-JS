@@ -6,11 +6,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Health check for deployment
+
 app.get('/health', (req, res) => res.send('Server is running 🚀'));
 
 
-/* ---------------- CATEGORY CRUD ---------------- */
+//Category
 
 // Get all categories
 app.get('/categories', (req, res) => {
@@ -72,13 +72,13 @@ app.get('/products', (req, res) => {
   const pageSize = parseInt(req.query.pageSize) || 10;
   const offset = (page - 1) * pageSize;
 
-  // 1️⃣ Get total count (fast count only on Product table)
+  // Get total count 
   db.query("SELECT COUNT(*) as total FROM Product", (err, countRes) => {
     if (err) return res.status(500).json({ error: err.message });
 
     const total = countRes[0].total;
 
-    // 2️⃣ Get paginated data
+    // Get paginated data
     const sql = `
       SELECT 
         p.ProductId,
@@ -104,6 +104,7 @@ app.get('/products', (req, res) => {
   });
 });
 
+//Products
 // Add product
 app.post('/products', (req, res) => {
   const { ProductName, CategoryId } = req.body;
