@@ -1,11 +1,12 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 
 const db = mysql.createConnection({
-  host: 'mysql-instance.aivencloud.com',
-  user: 'your_username',
-  password: 'your_password',
-  database: 'nimap_test',
-  port: 12345,   // VERY IMPORTANT (Aiven gives custom port)
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'root',
+  database: process.env.DB_NAME || 'nimap_test',
+  port: process.env.DB_PORT || 3306,
   ssl: {
     rejectUnauthorized: false
   }
@@ -13,7 +14,7 @@ const db = mysql.createConnection({
 
 db.connect(err => {
   if (err) {
-    console.log("DB Connection Failed ❌", err);
+    console.error("DB Connection Failed ❌", err.message);
   } else {
     console.log("MySQL Connected (Cloud) ✅");
   }
