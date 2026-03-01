@@ -1,0 +1,78 @@
+<h2>Product Master</h2>
+
+<!-- Add Product Form -->
+<div>
+    <input type="text" [(ngModel)]="ProductName" placeholder="Enter Product Name" />
+
+    <select [(ngModel)]="CategoryId">
+        <option value="0">-- Select Category --</option>
+        <option *ngFor="let cat of categories" [value]="cat.CategoryId">
+            {{ cat.CategoryName }}
+        </option>
+    </select>
+
+    <button (click)="add()">Add Product</button>
+</div>
+
+<br>
+
+<!-- Product Table -->
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Sr. No.</th>
+            <th>Product ID</th>
+            <th>Product Name</th>
+            <th>Category ID</th>
+            <th>Category Name</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let prod of products; let i = index">
+            <td>{{ (page - 1) * pageSize + i + 1 }}</td>
+            <td>{{ prod.ProductId }}</td>
+
+            <!-- Show input box when editing this row -->
+            <td>
+                <span *ngIf="editId !== prod.ProductId">{{ prod.ProductName }}</span>
+                <input *ngIf="editId === prod.ProductId" [(ngModel)]="editProductName" />
+            </td>
+
+            <td>{{ prod.CategoryId }}</td>
+
+            <!-- Category Name: show dropdown in edit mode -->
+            <td>
+                <span *ngIf="editId !== prod.ProductId">{{ prod.CategoryName }}</span>
+                <select *ngIf="editId === prod.ProductId" [(ngModel)]="editCategoryId">
+                    <option *ngFor="let cat of categories" [value]="cat.CategoryId">
+                        {{ cat.CategoryName }}
+                    </option>
+                </select>
+            </td>
+
+            <td>
+                <!-- Normal mode buttons -->
+                <ng-container *ngIf="editId !== prod.ProductId">
+                    <button (click)="startEdit(prod)">Edit</button>
+                    <button (click)="delete(prod.ProductId)">Delete</button>
+                </ng-container>
+                <!-- Edit mode buttons -->
+                <ng-container *ngIf="editId === prod.ProductId">
+                    <button (click)="saveEdit()">Save</button>
+                    <button (click)="cancelEdit()">Cancel</button>
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<!-- Pagination Controls -->
+<div>
+    <button (click)="prev()" [disabled]="page === 1">Previous</button>
+    &nbsp; Page {{ page }} of {{ totalPages }} &nbsp;
+    <button (click)="next()" [disabled]="page === totalPages">Next</button>
+    &nbsp;&nbsp; (Total Records: {{ totalRecords }})
+</div>

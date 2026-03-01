@@ -1,0 +1,45 @@
+<h2>Category Master</h2>
+
+<!-- Add Category Form -->
+<div>
+  <input type="text" [(ngModel)]="CategoryName" placeholder="Enter Category Name" />
+  <button (click)="add()">Add Category</button>
+</div>
+
+<br>
+
+<!-- Category Table -->
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Sr. No.</th>
+      <th>Category ID</th>
+      <th>Category Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cat of categories; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ cat.CategoryId }}</td>
+
+      <!-- Show input box when editing this row -->
+      <td>
+        <span *ngIf="editId !== cat.CategoryId">{{ cat.CategoryName }}</span>
+        <input *ngIf="editId === cat.CategoryId" [(ngModel)]="editName" />
+      </td>
+
+      <td>
+        <!-- Edit / Save / Cancel buttons -->
+        <ng-container *ngIf="editId !== cat.CategoryId">
+          <button (click)="startEdit(cat)">Edit</button>
+          <button (click)="delete(cat.CategoryId)">Delete</button>
+        </ng-container>
+        <ng-container *ngIf="editId === cat.CategoryId">
+          <button (click)="saveEdit()">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
