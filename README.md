@@ -1,4 +1,4 @@
-# Nimap Infotech Project
+# Node JS Project
 
 This project is a Full-Stack application consisting of a Node.js Backend and an Angular Frontend.
 
@@ -110,5 +110,5 @@ The backend server will run on `http://localhost:3000`.
 
 The frontend application will be available at `http://localhost:4200`.
 
-## Demo
+# Demo
 # https://drive.google.com/file/d/1L3d5Tsgs3rTqDlN_hILZtYGQwx-3NzFc/view?usp=drive_link
